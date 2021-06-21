@@ -38,7 +38,13 @@ interface WorkDao {
     @Query("select * from Work order by wId DESC limit 1")
     fun getRecentWork(): LiveData<Work>
 
-    // todo : setNum인가? 있었는데 그것도 다른데서 만들어줘야함
+    /*
+    // todo : setWorkCheck 는 repository에서 작업해주자. getWork로 wId에 해당하는거 받아서 wIsDone 작업 후 update로 넘겨주면 될듯
+    fun setWorkCheck(wId: Int){
+        val query = "update $tableName set wIsDone=1 where wId=${wId}"
+        myDatabase.execSQL(query)
+    }
+     */
 
     @Query("delete from Work")
     fun clear()

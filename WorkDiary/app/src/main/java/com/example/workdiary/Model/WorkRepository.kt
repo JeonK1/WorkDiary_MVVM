@@ -2,7 +2,6 @@ package com.example.workdiary.Model
 
 import android.app.Application
 import android.os.AsyncTask
-import android.text.PrecomputedText
 import androidx.lifecycle.LiveData
 
 class WorkRepository(application: Application) {
@@ -17,50 +16,67 @@ class WorkRepository(application: Application) {
     }
 
     fun insert(work:Work){
-        InsertNoteAsyncTask(workDao).execute(work)
+        InsertAsyncTask(workDao).execute(work)
     }
 
     fun update(work:Work){
-        UpdateNoteAsyncTask(workDao).execute(work)
+        UpdateAsyncTask(workDao).execute(work)
     }
 
     fun delete(work:Work){
-        DeleteNoteAsyncTask(workDao).execute(work)
+        DeleteAsyncTask(workDao).execute(work)
     }
 
-    fun getAllWorks(): LiveData<ArrayList<Work>> {
+    fun getWorkAll(): LiveData<ArrayList<Work>> {
         return allWorks
     }
 
     fun getWork(id:Int): LiveData<Work> {
-        val work = GetWorkNoteAsyncTask(workDao).execute(id)
-        return work.get()
+        // find Work by wId
+        return GetWorkAsyncTask(workDao).execute(id).get()
     }
 
-    //Todo : 여기 오버라이딩 하는 부분은 어떻게 처리해줘야할까
-//    fun getWork(title: String, setName:String): LiveData<Work> {
-//        val work = GetWorkNoteAsyncTask(workDao).execute(title, setName)
-//        return work.get()
-//    }
+    fun getWork(title: String, setName:String): LiveData<Work> {
+        // find Work by title and setName
+        return GetWorkAsyncTask(workDao).execute(title, setName).get()
+    }
 
-    private inner class InsertNoteAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
-        var workDao:WorkDao = workDao
+    fun getRecentWork(): LiveData<Work> {
+        return GetRecentWorkAsyncTask(workDao).execute().get()
+    }
+
+    fun getWorkNameAll(): LiveData<ArrayList<String>> {
+        return GetWorkNameAllAsyncTask(workDao).execute().get()
+    }
+
+    fun getSetNameAll(title:String): LiveData<ArrayList<String>> {
+        return GetSetNameAllAsyncTask(workDao).execute(title).get()
+    }
+
+
+
+    fun clear(){
+        ClearAsyncTask(workDao).execute()
+    }
+
+    private inner class InsertAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
+        val workDao = workDao
 
         override fun doInBackground(vararg params: Work): Void? {
             workDao.insert(params[0])
             return null
         }
     }
-    private inner class UpdateNoteAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
-        var workDao:WorkDao = workDao
+    private inner class UpdateAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
+        val workDao = workDao
 
         override fun doInBackground(vararg params: Work): Void? {
             workDao.update(params[0])
             return null
         }
     }
-    private inner class DeleteNoteAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
-        var workDao:WorkDao = workDao
+    private inner class DeleteAsyncTask(workDao:WorkDao): AsyncTask<Work, Void, Void>() {
+        val workDao = workDao
 
         override fun doInBackground(vararg params: Work): Void? {
             workDao.delete(params[0])
@@ -68,12 +84,56 @@ class WorkRepository(application: Application) {
         }
     }
 
-    private inner class GetWorkNoteAsyncTask(workDao:WorkDao): AsyncTask<Int, Void, LiveData<Work>>() {
-        var workDao:WorkDao = workDao
+    private inner class GetWorkAsyncTask(workDao:WorkDao): AsyncTask<Any, Void, LiveData<Work>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: Any): LiveData<Work>? {
+            when (params.size) {
+                1 -> {
+                    // param 개수가 1개 일때는 id 로 검색하기
+                    return workDao.getWork(
+                        id = params[0] as Int
+                    )
+                }
+                2 -> {
+                    // param 개수가 2개 일때는 title 과 setName 으로 검색하기
+                    return workDao.getWork(
+                        title = params[0] as String,
+                        setName = params[1] as String
+                    )
+                }
+                else -> {
+                    return null
+                }
+            }
+        }
+    }
 
-        override fun doInBackground(vararg params: Int?): LiveData<Work> {
-            val work = workDao.getWork(params[0]!!)
-            return work
+    private inner class GetRecentWorkAsyncTask(workDao: WorkDao): AsyncTask<Void, Void, LiveData<Work>>(){
+        val workDao = workDao
+        override fun doInBackground(vararg params: Void): LiveData<Work> {
+            return workDao.getRecentWork()
+        }
+    }
+
+    private inner class GetWorkNameAllAsyncTask(workDao: WorkDao): AsyncTask<Void, Void, LiveData<ArrayList<String>>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: Void): LiveData<ArrayList<String>> {
+            return workDao.getWorkNameAll()
+        }
+    }
+
+    private inner class GetSetNameAllAsyncTask(workDao: WorkDao): AsyncTask<String, Void, LiveData<ArrayList<String>>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: String): LiveData<ArrayList<String>> {
+            return workDao.getSetNameAll(params[0])
+        }
+    }
+
+    private inner class ClearAsyncTask(workDao: WorkDao): AsyncTask<Void, Void, Void>(){
+        val workDao = workDao
+        override fun doInBackground(vararg params: Void): Void? {
+            workDao.clear()
+            return null
         }
     }
 }
