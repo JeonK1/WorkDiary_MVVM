@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Entity
 import com.example.workdiary.Adapter.DiaryAdapter
 import com.example.workdiary.Fragment.Presenter.DiaryContract
 import com.example.workdiary.Fragment.Presenter.DiaryPresenter
