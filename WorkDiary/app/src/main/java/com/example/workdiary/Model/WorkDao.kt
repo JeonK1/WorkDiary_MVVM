@@ -29,22 +29,14 @@ interface WorkDao {
     @Query("select wSetName from work where wTitle=:title group by wSetName order by wSetName asc")
     fun getSetNameAll(title: String):LiveData<ArrayList<String>>
 
-    @Query("select * from Work where wIsDone=0 order by wDate, wStartTime asc")
-    fun getWorkInfoAll():LiveData<ArrayList<Work>>  // todo : Work to WorkInfo
-
     @Query("select substr(wDate,0,8) from Work where wIsDone=1 group by substr(wDate,0,8)  order by wDate DESC")
-    fun getDiaryInfoAll(): LiveData<ArrayList<Work>>  // todo : Work to DiaryInfo
+    fun getWorkDateAll(): LiveData<ArrayList<String>>
+
+    @Query("select * from Work where substr(wDate,0,8)=:date and wIsDone=1")
+    fun getDoneWork(date:String): LiveData<ArrayList<Work>>
 
     @Query("select * from Work order by wId DESC limit 1")
     fun getRecentWork(): LiveData<Work>
-
-    /*
-    // todo : setWorkCheck 는 repository에서 작업해주자. getWork로 wId에 해당하는거 받아서 wIsDone 작업 후 update로 넘겨주면 될듯
-    fun setWorkCheck(wId: Int){
-        val query = "update $tableName set wIsDone=1 where wId=${wId}"
-        myDatabase.execSQL(query)
-    }
-     */
 
     @Query("delete from Work")
     fun clear()

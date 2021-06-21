@@ -13,6 +13,6 @@ data class Work(
     @ColumnInfo(name = "wStartTime") val wStartTime:String, // 노동 시작 시간
     @ColumnInfo(name = "wEndTime") val wEndTime:String,   // 노동 끝 시간
     @ColumnInfo(name = "wMoney") val wMoney:Int,        // 시급
-    @ColumnInfo(name = "wIsDone") val wIsDone:Int        // 완료 여부 (0:false, 1:true)
+    @ColumnInfo(name = "wIsDone") var wIsDone:Int        // 완료 여부 (0:false, 1:true)
 ) {
 }
