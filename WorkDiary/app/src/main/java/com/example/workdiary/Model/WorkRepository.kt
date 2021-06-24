@@ -47,30 +47,11 @@ class WorkRepository(application: Application) {
     }
 
     fun getWorkNameAll(): LiveData<ArrayList<String>> {
-        val nameListLiveData:LiveData<ArrayList<String>> = MutableLiveData()
-        if(allWorks.value != null){
-            for (work in allWorks.value!!)
-                nameListLiveData.value!!.add(work.wTitle)
-        }
-        return nameListLiveData
-//        return GetWorkNameAllAsyncTask(workDao).execute().get() // Todo : 위 로직으로 대체 가능한지 확인, 가능하면 위에 로직으로 사용
+        return ConvertWorkToWorkName().execute(allWorks).get()
     }
 
     fun getWorkInfoAll(): LiveData<ArrayList<WorkInfo>> {
-        val workInfoListLiveData:LiveData<ArrayList<WorkInfo>> = MutableLiveData()
-        if(allWorks.value != null){
-            for (work in allWorks.value!!)
-                workInfoListLiveData.value!!.add(WorkInfo(
-                    wId = work.wId,
-                    workTitle = work.wTitle,
-                    workSetName = work.wSetName,
-                    workDate = work.wDate,
-                    workStartTime = work.wStartTime,
-                    workEndTime = work.wEndTime,
-                    workMoney = work.wMoney
-                ))
-        }
-        return workInfoListLiveData
+        return ConvertWorkToWorkInfo().execute(allWorks).get()
     }
 
     fun getWorkDateAll(): LiveData<ArrayList<String>> {
@@ -82,35 +63,7 @@ class WorkRepository(application: Application) {
     }
 
     fun getDiaryInfoAll(): LiveData<ArrayList<DiaryInfo>> {
-        val diaryInfoListLiveData:LiveData<ArrayList<DiaryInfo>> = MutableLiveData()
-        val workDateList = getWorkDateAll()
-        if(workDateList.value!!.size>0){
-            for (workDate in workDateList.value!!){
-                val workInfoList = ArrayList<WorkInfo>()
-                val workList = getDoneWorkAll(workDate).value!!
-                for (work in workList){
-                    // todo : 이런거 LiveData로 감싸지 않아도 될듯 (기능완성 후 처리)
-                    // Todo : Work to WorkInfo 함수 만들어주기 (기능완성 후 처리)
-                    workInfoList.add(WorkInfo(
-                        wId = work.wId,
-                        workTitle = work.wTitle,
-                        workSetName = work.wSetName,
-                        workDate = work.wDate,
-                        workStartTime = work.wStartTime,
-                        workEndTime = work.wEndTime,
-                        workMoney = work.wMoney
-                    ))
-                }
-
-                diaryInfoListLiveData.value!!.add(DiaryInfo(
-                        year = workDate.split("/")[0].toInt(),
-                        month = workDate.split("/")[1].toInt(),
-                        workList = workInfoList
-                    )
-                )
-            }
-        }
-        return diaryInfoListLiveData
+        return ConvertWorkToDiaryInfo().execute().get()
     }
 
     fun getSetNameAll(title:String): LiveData<ArrayList<String>> {
@@ -219,6 +172,74 @@ class WorkRepository(application: Application) {
         val workDao = workDao
         override fun doInBackground(vararg params: String): LiveData<ArrayList<Work>> {
             return workDao.getDoneWork(params[0])
+        }
+    }
+
+    private inner class ConvertWorkToWorkInfo: AsyncTask<LiveData<ArrayList<Work>>, Void, LiveData<ArrayList<WorkInfo>>>(){
+        override fun doInBackground(vararg params: LiveData<ArrayList<Work>>): LiveData<ArrayList<WorkInfo>> {
+            val workInfoListLiveData:LiveData<ArrayList<WorkInfo>> = MutableLiveData()
+            val allWork = params[0]
+            if(allWork.value != null){
+                for (work in allWork.value!!)
+                    if(work.wIsDone==0) {
+                        // 아직 완료되지 않은 작업들만 가져오기
+                        workInfoListLiveData.value!!.add(
+                            WorkInfo(
+                                wId = work.wId,
+                                workTitle = work.wTitle,
+                                workSetName = work.wSetName,
+                                workDate = work.wDate,
+                                workStartTime = work.wStartTime,
+                                workEndTime = work.wEndTime,
+                                workMoney = work.wMoney
+                            )
+                        )
+                    }
+            }
+            return workInfoListLiveData
+        }
+    }
+
+    private inner class ConvertWorkToWorkName: AsyncTask<LiveData<ArrayList<Work>>, Void, LiveData<ArrayList<String>>>(){
+        override fun doInBackground(vararg params: LiveData<ArrayList<Work>>): LiveData<ArrayList<String>> {
+            val nameListLiveData:LiveData<ArrayList<String>> = MutableLiveData()
+            val allWork = params[0]
+            if(allWork.value != null){
+                for (work in allWork.value!!)
+                    nameListLiveData.value!!.add(work.wTitle)
+            }
+            return nameListLiveData
+        }
+    }
+
+    private inner class ConvertWorkToDiaryInfo: AsyncTask<Void, Void, LiveData<ArrayList<DiaryInfo>>>(){
+        override fun doInBackground(vararg params: Void): LiveData<ArrayList<DiaryInfo>> {
+            val diaryInfoListLiveData:LiveData<ArrayList<DiaryInfo>> = MutableLiveData()
+            val workDateList = getWorkDateAll()
+            if(workDateList.value!!.size>0){
+                for (workDate in workDateList.value!!){
+                    val workInfoList = ArrayList<WorkInfo>()
+                    val workList = getDoneWorkAll(workDate).value!!
+                    for (work in workList){
+                        workInfoList.add(WorkInfo(
+                            wId = work.wId,
+                            workTitle = work.wTitle,
+                            workSetName = work.wSetName,
+                            workDate = work.wDate,
+                            workStartTime = work.wStartTime,
+                            workEndTime = work.wEndTime,
+                            workMoney = work.wMoney
+                        ))
+                    }
+
+                    diaryInfoListLiveData.value!!.add(DiaryInfo(
+                        year = workDate.split("/")[0].toInt(),
+                        month = workDate.split("/")[1].toInt(),
+                        workList = workInfoList
+                    ))
+                }
+            }
+            return diaryInfoListLiveData
         }
     }
 }

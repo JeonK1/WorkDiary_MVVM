@@ -20,7 +20,7 @@ interface WorkDao {
     @Query("select * from Work where wTitle=:title and wSetName=:setName")
     fun getWork(title: String, setName:String): LiveData<Work>
 
-    @Query("select * from Work")
+    @Query("select * from Work order by wDate, wStartTime asc")
     fun getWorkAll():LiveData<ArrayList<Work>>
 
     @Query("select wTitle from Work group by wTitle order by wTitle asc")

@@ -63,11 +63,7 @@ class WorkPresenter(
     }
 
     override fun isNoItems(flag: Boolean) {
-        if(flag){
-            view.showNoItems()
-        } else {
-            view.hideNoItems()
-        }
+
     }
 
     override fun addWorkResentData(context: Context?) {

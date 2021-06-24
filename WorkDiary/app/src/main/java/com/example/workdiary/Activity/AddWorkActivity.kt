@@ -176,7 +176,7 @@ class AddWorkActivity : AppCompatActivity(), AddWorkContract.View {
             presenter.clickLowestMoney()
         }
         tv_addwork_saveBtn.setOnClickListener {
-            // 젖아하기 버튼 클릭
+            // 저장하기 버튼 클릭
             presenter.clickSaveBtn(
                 title = act_addwork_title.text.toString(),
                 set = act_addwork_set.text.toString(),
