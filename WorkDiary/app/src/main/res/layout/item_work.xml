@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_itemwork_wrapper"
-    android:background="@drawable/rounded_rectangle_black_stroke"
     android:orientation="vertical"
-    android:layout_margin="10dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_itemwork_title"
-            android:fontFamily="@font/nanumgothic_bold"
-            android:text="노동 제목"
-            android:textColor="@color/colorBlack"
+            tools:text="노동 제목"
             android:textSize="16dp"
             android:gravity="left"
             android:layout_marginRight="10dp"
@@ -27,9 +20,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_itemwork_set"
-            android:fontFamily="@font/nanumgothic"
-            android:text="(세트 제목)"
-            android:textColor="@color/colorBlack2"
+            tools:text="(세트 제목)"
             android:textSize="14dp"
             android:gravity="left"
             android:layout_weight="1"
@@ -37,9 +28,7 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_itemwork_dday"
-            android:fontFamily="@font/termina_bold"
-            android:text="D-5"
-            android:textColor="@color/colorBlack"
+            tools:text="D-5"
             android:textSize="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -53,9 +42,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_itemwork_date"
-            android:fontFamily="@font/nanumgothic"
-            android:text="10월 17일(수)"
-            android:textColor="@color/colorBlack"
+            tools:text="10월 17일(수)"
             android:textSize="14dp"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -66,18 +53,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_itemwork_startNend"
-                android:fontFamily="@font/nanumgothic"
-                android:text="07:00 ~ 12:00"
-                android:textColor="@color/colorBlack"
+                tools:text="07:00 ~ 12:00"
                 android:textSize="14dp"
                 android:layout_marginRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv_itemwork_workTime"
-                android:fontFamily="@font/nanumgothic"
-                android:text="(7시간 30분)"
-                android:textColor="@color/colorBlack"
+                tools:text="(7시간 30분)"
                 android:textSize="14dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -87,6 +70,7 @@
         android:id="@+id/ll_itemwork_btnlayout"
         android:orientation="horizontal"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
@@ -94,11 +78,8 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_itemwork_okBtn"
-            android:background="@color/colorPastelBlue"
-            android:fontFamily="@font/nanumgothic"
             android:text="확인"
             android:textSize="14dp"
-            android:textColor="@color/colorBlack"
             android:gravity="center"
             android:padding="8dp"
             android:layout_weight="1"
@@ -106,11 +87,8 @@
             android:layout_height="match_parent"/>
         <TextView
             android:id="@+id/tv_itemwork_delete"
-            android:background="@color/colorPastelRed"
-            android:fontFamily="@font/nanumgothic"
             android:text="삭제"
             android:textSize="14dp"
-            android:textColor="@color/colorBlack"
             android:gravity="center"
             android:padding="8dp"
             android:layout_weight="1"
