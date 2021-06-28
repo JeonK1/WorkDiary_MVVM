@@ -1,4 +1,4 @@
-package com.example.workdiary
+package com.example.workdiary.data
 
 import android.content.Context
 import androidx.room.Database
@@ -10,10 +10,10 @@ abstract class WorkDatabase:RoomDatabase() {
     abstract fun workDao(): WorkDao
 
     companion object {
-       private var instance:WorkDatabase? = null
+       private var instance: WorkDatabase? = null
 
-        fun getInstance(context: Context):WorkDatabase{
-            if(instance==null){
+        fun getInstance(context: Context): WorkDatabase {
+            if(instance ==null){
                 instance = Room.databaseBuilder(
                     context,
                     WorkDatabase::class.java,

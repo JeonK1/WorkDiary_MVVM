@@ -1,4 +1,4 @@
-package com.example.workdiary
+package com.example.workdiary.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.example.workdiary
+package com.example.workdiary.data
 
 import android.app.Application
 import android.os.AsyncTask
@@ -16,15 +16,15 @@ class WorkRepository(application: Application) {
         allWorks = workDao.getAllWork()
     }
 
-    fun insert(work:Work){
+    fun insert(work: Work){
         InsertAsyncTask(workDao).execute(work)
     }
 
-    fun update(work:Work){
+    fun update(work: Work){
         UpdateAsyncTask(workDao).execute(work)
     }
 
-    fun delete(work:Work){
+    fun delete(work: Work){
         DeleteAsyncTask(workDao).execute(work)
     }
 
