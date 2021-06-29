@@ -15,9 +15,9 @@ interface WorkDao {
     @Delete
     fun delete(work: Work)
 
-    @Query("select * from Work")
-    fun getAllWork():LiveData<List<Work>> // recyclerView에 넣어놓고 관찰할거라 LiveData임
+    @Query("select * from Work where wIsDone=0")
+    fun getWorkInfoAll():LiveData<List<Work>>
 
-    @Query("select * from Work where wId=:wId")
-    fun getWork(wId: Int): Work
+    @Query("select * from Work where wIsDone=1 order by wDate DESC, wStartTime DESC")
+    fun getDiaryInfoAll(): LiveData<List<Work>>
 }

@@ -1,5 +1,6 @@
 package com.example.workdiary.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,9 +51,11 @@ class WorkAdapter(var items:List<Work>):RecyclerView.Adapter<WorkAdapter.MyViewH
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //dday 구하기
         val sf = SimpleDateFormat("yyyy/MM/dd")
-        val today = Calendar.getInstance()
-        val workDate = sf.parse(items[position].wDate)!!
-        val workDday = if(today.time.time < workDate.time) "D-"+((workDate.time - today.time.time) / (60*60*24*1000)).toString() else "기한이 지났습니다"
+        val workDate = sf.parse(items[position].wDate)
+        val today = with(Calendar.getInstance()) {
+            sf.parse("${get(Calendar.YEAR)}/${get(Calendar.MONTH)+1}/${get(Calendar.DATE)}")
+        }
+        val workDday = if(today.time < workDate.time) "D-"+((workDate.time - today.time) / (60*60*24*1000)).toString() else "기한이 지났습니다"
 
         //노동시간 구하기
         val startTimeHour = items[position].wStartTime.split(":")[0].toInt()
@@ -61,7 +64,6 @@ class WorkAdapter(var items:List<Work>):RecyclerView.Adapter<WorkAdapter.MyViewH
         val endTimeHour = items[position].wEndTime.split(":")[0].toInt()
         val endTimeMin = items[position].wEndTime.split(":")[1].toInt()
         val endTimeStamp = endTimeHour*60 + endTimeMin
-
         val workTimeHour = (endTimeStamp-startTimeStamp)/60
         val workTimeMin = (endTimeStamp-startTimeStamp)%60
 

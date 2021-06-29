@@ -3,6 +3,7 @@ package com.example.workdiary.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,13 +40,16 @@ class WorkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // recyclerView 초기화
         val recyclerView = view.findViewById<RecyclerView>(R.id.rv_work_recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         workAdapter = WorkAdapter(listOf()) // empty list adapter
         recyclerView.adapter = workAdapter
 
         // ViewModel 설정
-        workViewModel = ViewModelProvider(this, WorkViewModelFactory(requireActivity().application)).get(
-            WorkViewModel::class.java)
+        workViewModel =
+            ViewModelProvider(this, WorkViewModelFactory(requireActivity().application)).get(
+                WorkViewModel::class.java
+            )
         workViewModel.getAllWork().observe(viewLifecycleOwner, Observer { works ->
             workAdapter.setWorks(works)
         })
@@ -58,7 +62,7 @@ class WorkFragment : Fragment() {
             override fun OnItemClick(holder: WorkAdapter.MyViewHolder, view: View, position: Int) {
                 // item 클릭 시, 버튼 있는 화면 보여주기/숨기기
                 val btnLayout = view.findViewById<LinearLayout>(R.id.ll_itemwork_btnlayout)
-                when(btnLayout.visibility){
+                when (btnLayout.visibility) {
                     View.VISIBLE -> {
                         btnLayout.visibility = View.GONE
                     }
@@ -68,7 +72,8 @@ class WorkFragment : Fragment() {
                 }
             }
 
-            override fun OnDeleteBtnClick(holder: WorkAdapter.MyViewHolder, view: View, position: Int
+            override fun OnDeleteBtnClick(
+                holder: WorkAdapter.MyViewHolder, view: View, position: Int
             ) {
                 // item 삭제 버튼 클릭 시, item 제거
                 with(workViewModel) {
@@ -84,16 +89,15 @@ class WorkFragment : Fragment() {
                     setIsDone(work)
                 }
             }
-
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == MainActivity.ADD_WORK_ACTIVITY){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == MainActivity.ADD_WORK_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
                 // DB에 추가하기
-                with(workViewModel){
+                with(workViewModel) {
                     val newWork = data?.getSerializableExtra(AddWorkActivity.ADD_WORK_VALUE) as Work
                     insert(newWork)
                 }

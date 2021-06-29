@@ -12,11 +12,7 @@ class WorkViewModel(application: Application): ViewModel() {
     }
 
     private val allWorks: LiveData<List<Work>> by lazy {
-        loadWorks()
-    }
-
-    private fun loadWorks():LiveData<List<Work>> {
-        return repository.getAllWorks()
+        repository.getAllWorks()
     }
 
     fun insert(work: Work) {
@@ -39,4 +35,6 @@ class WorkViewModel(application: Application): ViewModel() {
     fun getAllWork(): LiveData<List<Work>> {
         return allWorks
     }
+
+
 }

@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:completionThreshold="1"
             android:hint="일 제목" />
 
         <AutoCompleteTextView
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:completionThreshold="1"
             android:hint="세트" />
     </LinearLayout>
 
@@ -59,25 +61,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/et_addwork_money"
-            android:hint="시급"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="시급" />
+
         <TextView
             android:id="@+id/btn_addwork_inputLowestMoney"
-            android:text="최저시급 입력"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="최저시급 입력" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/tv_addwork_saveBtn"
-        android:text="저장하기"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="저장하기" />
 </LinearLayout>
