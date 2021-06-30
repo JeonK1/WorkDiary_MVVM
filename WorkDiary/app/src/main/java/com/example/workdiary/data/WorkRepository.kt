@@ -39,6 +39,18 @@ class WorkRepository(application: Application) {
         return allWorks
     }
 
+    fun getTitleNames(): List<String> {
+        return GetTitleNames(workDao).execute().get()
+    }
+
+    fun getSetNames(title:String): List<String> {
+        return GetSetNames(workDao).execute(title).get()
+    }
+
+    fun getWorks(title:String, setName:String): List<Work> {
+        return GetWorks(workDao).execute(title, setName).get()
+    }
+
     private inner class InsertAsyncTask(workDao: WorkDao) : AsyncTask<Work, Void, Void>() {
         val workDao = workDao
         override fun doInBackground(vararg params: Work): Void? {
@@ -60,6 +72,30 @@ class WorkRepository(application: Application) {
         override fun doInBackground(vararg params: Work): Void? {
             workDao.delete(params[0])
             return null
+        }
+    }
+
+    private inner class GetTitleNames(workDao: WorkDao) : AsyncTask<Void, Void, List<String>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: Void): List<String> {
+            return workDao.getTitleNames()
+        }
+    }
+
+    private inner class GetSetNames(workDao: WorkDao) : AsyncTask<String, Void, List<String>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: String): List<String> {
+            val title = params[0]
+            return workDao.getSetNames(title)
+        }
+    }
+
+    private inner class GetWorks(workDao: WorkDao) : AsyncTask<String, Void, List<Work>>() {
+        val workDao = workDao
+        override fun doInBackground(vararg params: String): List<Work> {
+            val title = params[0]
+            val setName = params[1]
+            return workDao.getWorks(title, setName)
         }
     }
 }

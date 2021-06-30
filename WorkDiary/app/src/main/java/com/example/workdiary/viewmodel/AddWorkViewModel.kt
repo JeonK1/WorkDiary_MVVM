@@ -38,6 +38,18 @@ class AddWorkViewModel(application: Application): ViewModel() {
         )
     }
 
+    fun getTitleNames(): List<String> {
+        return repository.getTitleNames()
+    }
+
+    fun getSetNames(title:String): List<String> {
+        return repository.getSetNames(title)
+    }
+
+    fun getWorks(title:String, setName:String): List<Work> {
+        return repository.getWorks(title, setName)
+    }
+
     fun getNewWork(): Work{
         return newWork
     }

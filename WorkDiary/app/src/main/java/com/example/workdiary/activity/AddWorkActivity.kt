@@ -104,14 +104,13 @@ class AddWorkActivity : AppCompatActivity() {
                     "${"%02d".format(hourOfDay)}:${"%02d".format(minute)}"
             }
 
-        // Todo : actv
-//        act_addwork_title.setAdapter(
-//            ArrayAdapter(
-//                applicationContext,
-//                android.R.layout.simple_dropdown_item_1line,
-//                addWorkViewModel.getTitleNames()
-//            )
-//        )
+        act_addwork_title.setAdapter(
+            ArrayAdapter(
+                applicationContext,
+                android.R.layout.simple_dropdown_item_1line,
+                addWorkViewModel.getTitleNames()
+            )
+        )
 
         act_addwork_title.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -119,15 +118,14 @@ class AddWorkActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
             override fun afterTextChanged(s: Editable?) {
-                // Todo : actv
-//                val wTitle = s.toString()
-//                act_addwork_title.setAdapter(
-//                    ArrayAdapter(
-//                        applicationContext,
-//                        android.R.layout.simple_dropdown_item_1line,
-//                        addWorkViewModel.getSetNames(wTitle)
-//                    )
-//                )
+                val wTitle = s.toString()
+                act_addwork_set.setAdapter(
+                    ArrayAdapter(
+                        applicationContext,
+                        android.R.layout.simple_dropdown_item_1line,
+                        addWorkViewModel.getSetNames(wTitle)
+                    )
+                )
             }
         })
 
@@ -137,14 +135,15 @@ class AddWorkActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
             override fun afterTextChanged(s: Editable?) {
-                // Todo : actv
-//                val wTitle = act_addwork_title.text.toString()
-//                val wSetName = s.toString()
-//                addWorkViewModel.getWork(wTitle, wSetName)?.apply {
-//                    addWorkViewModel.getStartTimeLiveData().value = wStartTime  // wStartTime
-//                    addWorkViewModel.getEndTimeLiveData().value = wEndTime      // wEndTime
-//                    et_addwork_money.setText(wMoney.toString())                 // wMoney
-//                }
+                val wTitle = act_addwork_title.text.toString()
+                val wSetName = s.toString()
+                val works = addWorkViewModel.getWorks(wTitle, wSetName)
+                if(works.isNotEmpty()){
+                    // wStartTime, wEndTime, wMoney setting
+                    tv_addwork_pickStartTime.text = works[0].wStartTime
+                    tv_addwork_pickEndTime.text = works[0].wEndTime
+                    et_addwork_money.setText(works[0].wMoney.toString())
+                }
             }
         })
 

@@ -33,7 +33,7 @@
                 android:layout_weight="2"
                 android:completionThreshold="1"
                 android:gravity="center"
-                android:hint="일 제목" />
+                android:hint="노동 이름" />
 
             <AutoCompleteTextView
                 android:id="@+id/act_addwork_set"
@@ -43,7 +43,7 @@
                 android:layout_weight="1"
                 android:completionThreshold="1"
                 android:gravity="center"
-                android:hint="세트" />
+                android:hint="세트 이름" />
         </LinearLayout>
 
         <LinearLayout
