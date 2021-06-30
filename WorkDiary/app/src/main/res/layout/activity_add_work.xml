@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,80 +8,141 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <AutoCompleteTextView
-            android:id="@+id/act_addwork_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:completionThreshold="1"
-            android:hint="일 제목" />
-
-        <AutoCompleteTextView
-            android:id="@+id/act_addwork_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:completionThreshold="1"
-            android:hint="세트" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="30dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_addwork_pickDate"
+        <ImageView
+            android:id="@+id/ib_addwork_backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="10월 17일 (수)" />
+            android:background="@drawable/ic_arrow_left"
+            android:backgroundTint="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/tv_addwork_pickStartTime"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="08:00" />
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_addwork_pickEndTime"
-            android:layout_width="wrap_content"
+            <AutoCompleteTextView
+                android:id="@+id/act_addwork_title"
+                style="@style/style_normal_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:completionThreshold="1"
+                android:gravity="center"
+                android:hint="일 제목" />
+
+            <AutoCompleteTextView
+                android:id="@+id/act_addwork_set"
+                style="@style/style_normal_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:completionThreshold="1"
+                android:gravity="center"
+                android:hint="세트" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="20:00" />
-    </LinearLayout>
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_addwork_pickDate"
+                style="@style/style_normal_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="10월 17일 (수)" />
 
-        <EditText
-            android:id="@+id/et_addwork_money"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tv_addwork_pickStartTime"
+                style="@style/style_normal_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="08:00" />
+
+            <TextView
+                style="@style/style_normal_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="~" />
+
+            <TextView
+                android:id="@+id/tv_addwork_pickEndTime"
+                style="@style/style_normal_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="20:00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="시급" />
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/btn_addwork_inputLowestMoney"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="최저시급 입력" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_normal_context"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시급 " />
+
+                <EditText
+                    android:id="@+id/et_addwork_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:gravity="center" />
+
+                <TextView
+                    style="@style/style_normal_context"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_addwork_inputLowestMoney"
+                style="@style/style_normal_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="최저시급 입력" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_addwork_saveBtn"
+        style="@style/style_bottom_button_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:padding="20dp"
         android:text="저장하기" />
-</LinearLayout>
+</RelativeLayout>

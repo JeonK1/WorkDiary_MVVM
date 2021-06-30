@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -80,7 +81,16 @@ class DiaryFragment : Fragment() {
             }
 
             // set recyclerView
-            diaryAdapter.setDiaryList(diaryList)
+            if(diaryList.isNotEmpty()){
+                // item 존재
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).text = "아직 완료된 노동일정이 없어요"
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).visibility = View.INVISIBLE
+                diaryAdapter.setDiaryList(diaryList)
+            } else {
+                // item 존재하지 않음
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).text = "아직 완료된 노동일정이 없어요"
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).visibility = View.VISIBLE
+            }
         })
     }
 }

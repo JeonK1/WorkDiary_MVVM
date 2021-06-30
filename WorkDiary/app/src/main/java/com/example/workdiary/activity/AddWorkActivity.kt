@@ -204,6 +204,11 @@ class AddWorkActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+
+        ib_addwork_backBtn.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
     }
 
 }

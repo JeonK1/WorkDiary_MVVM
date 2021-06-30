@@ -7,7 +7,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_diary_recyclerView"
-        android:layout_marginBottom="100dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_diary" />
 </FrameLayout>

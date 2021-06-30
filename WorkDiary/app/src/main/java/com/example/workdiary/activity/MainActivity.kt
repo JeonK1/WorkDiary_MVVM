@@ -30,10 +30,18 @@ class MainActivity : AppCompatActivity() {
         tv_main_diaryBtn.setOnClickListener {
             setFragment(diaryFragment)
             hideAddWorkBtn()
+            tv_main_diaryBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_white)
+            tv_main_diaryBtn.setTextColor(resources.getColor(R.color.colorBlack))
+            tv_main_workBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_black)
+            tv_main_workBtn.setTextColor(resources.getColor(R.color.colorWhite))
         }
         tv_main_workBtn.setOnClickListener {
             setFragment(workFragment)
             showAddWorkBtn()
+            tv_main_workBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_white)
+            tv_main_workBtn.setTextColor(resources.getColor(R.color.colorBlack))
+            tv_main_diaryBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_black)
+            tv_main_diaryBtn.setTextColor(resources.getColor(R.color.colorWhite))
         }
         tv_main_addBtn.setOnClickListener {
             val intent = Intent(this, AddWorkActivity::class.java)

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.example.workdiary.activity.AddWorkActivity
 import com.example.workdiary.activity.MainActivity
 import com.example.workdiary.adapter.WorkAdapter
 import com.example.workdiary.data.Work
+import kotlinx.android.synthetic.main.activity_main.*
 
 class WorkFragment : Fragment() {
     lateinit var workViewModel: WorkViewModel
@@ -51,7 +53,16 @@ class WorkFragment : Fragment() {
                 WorkViewModel::class.java
             )
         workViewModel.getAllWork().observe(viewLifecycleOwner, Observer { works ->
-            workAdapter.setWorks(works)
+            if(works.isNotEmpty()){
+                // item 존재
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).text = "새로운 노동일정을 추가해주세요"
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).visibility = View.INVISIBLE
+                workAdapter.setWorks(works)
+            } else {
+                // item 존재하지 않음
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).text = "새로운 노동일정을 추가해주세요"
+                requireActivity().findViewById<TextView>(R.id.tv_main_comment).visibility = View.VISIBLE
+            }
         })
 
         listenerInit()
