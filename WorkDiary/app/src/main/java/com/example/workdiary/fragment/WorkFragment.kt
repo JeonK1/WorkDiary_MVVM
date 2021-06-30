@@ -1,15 +1,19 @@
 package com.example.workdiary.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +26,7 @@ import com.example.workdiary.activity.MainActivity
 import com.example.workdiary.adapter.WorkAdapter
 import com.example.workdiary.data.Work
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_box.view.*
 
 class WorkFragment : Fragment() {
     lateinit var workViewModel: WorkViewModel
@@ -88,18 +93,65 @@ class WorkFragment : Fragment() {
             ) {
                 // item 삭제 버튼 클릭 시, item 제거
                 with(workViewModel) {
-                    var work = getAllWork().value!![position]
-                    delete(work)
+                    crateDialog(
+                        context = context!!,
+                        work = getAllWork().value!![position],
+                        action = "DEL",
+                        title = "노동일정 제거",
+                        contents = "${holder.date.text}의 ${holder.title.text} 노동 일정을 제거할까요??"
+                    )
                 }
             }
 
             override fun OnOkBtnClick(holder: WorkAdapter.MyViewHolder, view: View, position: Int) {
                 // item 확인 버튼 클릭 시, item isDone값 1로 만들기
+                // item 삭제 버튼 클릭 시, item 제거
                 with(workViewModel) {
-                    var work = getAllWork().value!![position]
-                    setIsDone(work)
+                    crateDialog(
+                        context = context!!,
+                        work = getAllWork().value!![position],
+                        action = "OK",
+                        title = "노동 완료",
+                        contents = "노동 기록을 일지로 옮길까요??"
+                    )
+                }
+                }
+        }
+    }
+
+
+    fun crateDialog(context: Context, work:Work, action: String, title: String, contents: String) {
+        // 다이얼로그 창 띄우기
+        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_box, null)
+        val mBuilder = AlertDialog.Builder(context).setView(mDialogView)
+        val mAlertDialog = mBuilder.show()
+        mAlertDialog.window!!.setGravity(Gravity.CENTER)
+        mAlertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mDialogView.tv_dialog_title.text = title
+        mDialogView.tv_dialog_context.text = contents
+        mDialogView.tv_dialog_ok.text = "예"
+        mDialogView.tv_dialog_no.text = "아니오"
+        mDialogView.tv_dialog_ok.setOnClickListener {
+            // 확인 버튼 누름
+            when(action){
+                "DEL" -> {
+                    // item 삭제하기
+                    with(workViewModel) {
+                        delete(work)
+                    }
+                }
+                "OK" -> {
+                    // item 확인 처리하기
+                    with(workViewModel) {
+                        setIsDone(work)
+                    }
                 }
             }
+            mAlertDialog.dismiss()
+        }
+        mDialogView.tv_dialog_no.setOnClickListener{
+            // 취소 버튼 누름
+            mAlertDialog.dismiss()
         }
     }
 
