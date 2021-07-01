@@ -1,7 +1,7 @@
 # WorkDiary_MVVM
 WorkDiary with MVVM design pattern
 <br>아르바이트 기록전용 어플리케이션, WorkDiary (MVVM Design Pattern Rebuilding Project)
-<br>개발기간 : 2021.06.01 ~ 2021.07.01
+<br>개발기간 : 2021.06.15 ~ 2021.07.01
 <br><br>
 <h2>프로젝트 개요</h2>
 - 아르바이트 비 정산이 맞게 되었는지 체크하고자 다운받으려한 어플리케이션들이 너무 필요 이상의 많은 기능과 복잡한 UI를 제공하고 있어서 정말 간단하고 사용자 친화감있는 어플리케이션을 만들고자 시작하게 되었다.<br>
