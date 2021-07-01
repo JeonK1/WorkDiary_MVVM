@@ -26,12 +26,6 @@ class DiaryDetailAdapter(val items:List<Work>): RecyclerView.Adapter<DiaryDetail
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //dday 구하기
-        val sf = SimpleDateFormat("yyyy/MM/dd")
-        val today = Calendar.getInstance()
-        val workDate = sf.parse(items[position].wDate)
-        val workDday = (today.time.time - workDate.time) / (60*60*24*1000)
-
         //노동시간 구하기
         val startTimeStamp = items[position].wStartTime.split(":")[0].toInt()*60 +
                 items[position].wStartTime.split(":")[1].toInt()
@@ -42,7 +36,7 @@ class DiaryDetailAdapter(val items:List<Work>): RecyclerView.Adapter<DiaryDetail
 
         //xml에 적용하기
         holder.title.text = items[position].wTitle
-        holder.workDay.text = items[position].wDate.split("/")[2].toInt().toString()+"일"
+        holder.workDay.text = "${items[position].wDate.split("/")[2]}일"
         holder.workTimeNMoney.text = "${workTimeHour}시간 ${"%02d".format(workTimeMin)}분 x ${items[position].wMoney}원"
     }
 }

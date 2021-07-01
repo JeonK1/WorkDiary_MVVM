@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workdiary.R
 import com.example.workdiary.data.DiaryInfo
-import com.example.workdiary.data.Work
 import java.text.DecimalFormat
 
 class DiaryAdapter(var items:List<DiaryInfo>): RecyclerView.Adapter<DiaryAdapter.MyViewHolder>() {
@@ -17,9 +16,8 @@ class DiaryAdapter(var items:List<DiaryInfo>): RecyclerView.Adapter<DiaryAdapter
         var totalMoney: TextView = itemView.findViewById(R.id.tv_itemdiary_totalMoney)
         var workList: RecyclerView = itemView.findViewById(R.id.rv_itemdiary_workRecyclerView)
         var bottomView: View = itemView.findViewById(R.id.view_itemdiary_bottomLine)
-        init {
-        }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false)
         return MyViewHolder(v)
@@ -30,16 +28,20 @@ class DiaryAdapter(var items:List<DiaryInfo>): RecyclerView.Adapter<DiaryAdapter
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        // 마지막 item은 하단 구분선 제거하기
         if(items.size-1 == position){
             holder.bottomView.visibility = View.GONE
         }
-        holder.title.text = items[position].year.toString() + "년 " + items[position].month + "월"
+
+        // recyclerView 적용
+        holder.title.text = "${items[position].year}년 ${"%02d".format(items[position].month)}월"
         holder.workList.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.VERTICAL, false)
         holder.workList.adapter = DiaryDetailAdapter(items[position].workList)
-        //totalMoney 계산하기
+
+        // totalMoney 계산하기
         var totalMoney = 0
         for(i in 0 until items[position].workList.size){
-            //노동시간 구하기
+            // 노동시간 구하기
             val startTimeStamp = items[position].workList[i].wStartTime.split(":")[0].toInt()*60 +
                     items[position].workList[i].wStartTime.split(":")[1].toInt()
             val endTimeStamp = items[position].workList[i].wEndTime.split(":")[0].toInt()*60 +
@@ -52,7 +54,7 @@ class DiaryAdapter(var items:List<DiaryInfo>): RecyclerView.Adapter<DiaryAdapter
         }
         val decimalFormat = DecimalFormat("###,###.##")
         val totalMoneyStr = decimalFormat.format(totalMoney)
-        holder.totalMoney.text = "Total : "+totalMoneyStr+"원"
+        holder.totalMoney.text = "Total : ${totalMoneyStr}원"
     }
 
     fun setDiaryList(diaryList:List<DiaryInfo>) {

@@ -35,13 +35,20 @@ class DiaryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerViewInit(view)
+        viewModelInit()
+    }
+
+    private fun recyclerViewInit(view:View) {
         // recyclerView 초기화
         val recyclerView = view.findViewById<RecyclerView>(R.id.rv_diary_recyclerView)
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         diaryAdapter = DiaryAdapter(listOf()) // empty list adapter
         recyclerView.adapter = diaryAdapter
+    }
 
+    private fun viewModelInit() {
         // viewModel 설정
         diaryViewModel =
             ViewModelProvider(this, DiaryViewModelFactory(requireActivity().application)).get(
@@ -93,4 +100,5 @@ class DiaryFragment : Fragment() {
             }
         })
     }
+
 }

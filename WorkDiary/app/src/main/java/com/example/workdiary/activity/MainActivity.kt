@@ -26,8 +26,14 @@ class MainActivity : AppCompatActivity() {
         buttonInit()
     }
 
+    private fun fragmentInit() {
+        // 첫 fragment는 workFragment로 setting
+        setFragment(workFragment)
+    }
+
     private fun buttonInit() {
         tv_main_diaryBtn.setOnClickListener {
+            // 일지 버튼 클릭 시
             setFragment(diaryFragment)
             hideAddWorkBtn()
             tv_main_diaryBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_white)
@@ -36,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             tv_main_workBtn.setTextColor(resources.getColor(R.color.colorWhite))
         }
         tv_main_workBtn.setOnClickListener {
+            // 노동 버튼 클릭 시
             setFragment(workFragment)
             showAddWorkBtn()
             tv_main_workBtn.setBackgroundResource(R.drawable.top_rounded_rectangle_white)
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             tv_main_diaryBtn.setTextColor(resources.getColor(R.color.colorWhite))
         }
         tv_main_addBtn.setOnClickListener {
+            // 노동 추가 버튼 클릭 시
             val intent = Intent(this, AddWorkActivity::class.java)
             startActivityForResult(intent, ADD_WORK_ACTIVITY)
         }
@@ -57,11 +65,6 @@ class MainActivity : AppCompatActivity() {
     private fun hideAddWorkBtn() {
         // AddWorkActivity로 이동하는 버튼 안보이게 하기
         tv_main_addBtn.visibility = View.GONE
-    }
-
-    private fun fragmentInit() {
-        // 첫 fragment는 workFragment로 setting
-        setFragment(workFragment)
     }
 
     private fun setFragment(fragment: Fragment) {

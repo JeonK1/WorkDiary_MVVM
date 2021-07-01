@@ -18,7 +18,7 @@ class AddWorkViewModel(application: Application): ViewModel() {
     private val endTime = MutableLiveData<String>()
 
     init {
-        // date, startTime, endTime 초기화
+        // date, startTime, endTime 초기값 초기화하기
         // date : 현재 년/월/일
         // startTime : 현재 시:00
         // endTime : 현재 시+1:00

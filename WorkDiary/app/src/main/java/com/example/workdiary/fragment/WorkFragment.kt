@@ -45,13 +45,21 @@ class WorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerViewInit(view)
+        viewModelInit()
+        listenerInit()
+    }
+
+    private fun recyclerViewInit(view:View) {
         // recyclerView 초기화
         val recyclerView = view.findViewById<RecyclerView>(R.id.rv_work_recyclerView)
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         workAdapter = WorkAdapter(listOf()) // empty list adapter
         recyclerView.adapter = workAdapter
+    }
 
+    private fun viewModelInit() {
         // ViewModel 설정
         workViewModel =
             ViewModelProvider(this, WorkViewModelFactory(requireActivity().application)).get(
@@ -69,11 +77,9 @@ class WorkFragment : Fragment() {
                 requireActivity().findViewById<TextView>(R.id.tv_main_comment).visibility = View.VISIBLE
             }
         })
-
-        listenerInit()
     }
-
     private fun listenerInit() {
+        // WorkAdapter Listener 초기화
         workAdapter.onItemClickListener = object : WorkAdapter.OnItemClickListener {
             override fun OnItemClick(holder: WorkAdapter.MyViewHolder, view: View, position: Int) {
                 // item 클릭 시, 버튼 있는 화면 보여주기/숨기기
@@ -105,7 +111,6 @@ class WorkFragment : Fragment() {
 
             override fun OnOkBtnClick(holder: WorkAdapter.MyViewHolder, view: View, position: Int) {
                 // item 확인 버튼 클릭 시, item isDone값 1로 만들기
-                // item 삭제 버튼 클릭 시, item 제거
                 with(workViewModel) {
                     crateDialog(
                         context = context!!,
@@ -115,7 +120,7 @@ class WorkFragment : Fragment() {
                         contents = "노동 기록을 일지로 옮길까요??"
                     )
                 }
-                }
+            }
         }
     }
 
@@ -159,7 +164,7 @@ class WorkFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MainActivity.ADD_WORK_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                // DB에 추가하기
+                // AddWorkActivity 에서 새로운 값을 추가함, DB에 추가해주기
                 with(workViewModel) {
                     val newWork = data?.getSerializableExtra(AddWorkActivity.ADD_WORK_VALUE) as Work
                     insert(newWork)
