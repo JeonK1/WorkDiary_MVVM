@@ -6,7 +6,7 @@ WorkDiary with MVVM design pattern
 <h2>프로젝트 개요</h2>
 - 아르바이트 비 정산이 맞게 되었는지 체크하고자 다운받으려한 어플리케이션들이 너무 필요 이상의 많은 기능과 복잡한 UI를 제공하고 있어서 정말 간단하고 사용자 친화감있는 어플리케이션을 만들고자 시작하게 되었다.<br>
 - 이 어플리케이션이 완성되었을 때 동생은 아직 아르바이트 하고 있어서 현재는 동생이 이 어플리케이션을 사용하고 있다는 훈훈한 후기..<br>
-- 기존에 개발되었던 것을 MVVM 패턴으로 rebuilding 하는 작업을 진행하였다. (<a href="https://github.com/JeonK1/WorkDiary">WorkDiary MVC Version</a>)
+- 기존에 개발되었던 것을 MVVM 패턴으로 rebuilding 하는 작업을 진행하였다. (<a href="https://github.com/JeonK1/WorkDiary">WorkDiary MVC Version</a>) <br>
 - <a href="https://blog.naver.com/ponson1017/222400759708">Room, LiveData 체험일지 </a><br>
 - <a href="https://blog.naver.com/ponson1017/222403492693">Repository, AsyncTask 체험일지 </a><br>
 - <a href="https://blog.naver.com/ponson1017/222408838342">ViewModel 체험일지 </a><br>
