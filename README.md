@@ -25,6 +25,14 @@ WorkDiary with MVVM design pattern
 <h2>실행 화면</h2>
 <img src="/readme_img/3.png" width=800 />
 <br><br>
+<h2>기술 스택</h2>
+- Android Kotlin <br>
+- Room database를 활용하여 데이터 관리 <br>
+- Room + LiveData + ViewModel 을 활용한 MVVM 아키텍쳐 구현
+<br><br>
 <h2>개발 환경</h2><br>
-Android Studio 3.6.3 <br>
-openjdk 14.0.1 <br>
+Complie SDK Version: Android 10.0 (API 29) <br>
+Minimum SDK Version: Android Pie (API 28) <br>
+Gradle Version: 6.7.1 <br>
+JDK version: jdk_1_8 <br>
+Android Studio 4.2.1 <br>
